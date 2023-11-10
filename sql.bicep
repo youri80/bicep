@@ -61,6 +61,7 @@ resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
   location: location
   properties: {
     administratorLogin: sqlServerAdministratorLogin
+    minimalTlsVersion: 'TLS1.2'
     administratorLoginPassword: sqlServerAdministratorPassword
   }
 }
