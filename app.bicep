@@ -13,14 +13,27 @@ param environmentName string = 'dev'
 param solutionName string = 'tis-${uniqueString(resourceGroup().id)}'
 
 
-var tisAppGui = 'app-gui-${environmentName}-${solutionName}'
+var tisAppGui = 'gui-${environmentName}-${solutionName}'
 
-var tisAppElster  = 'app-elster-${environmentName}-${solutionName}'
+var tisAppElster  = 'elster-${environmentName}-${solutionName}'
 
-var tisAppAutomation = 'app-automation-${environmentName}-${solutionName}'
+var tisAppAutomation = 'automation-${environmentName}-${solutionName}'
 
 //Env hier wird die subnet-Id benötigt
+resource containerEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
+  name: 'container-env-${environmentName}-${solutionName}'
+  location: location
+  properties: {
+    zoneRedundant: true
+    workloadProfiles: [
+      {
+        workloadProfileType: 'Consumption'
+        name: 'Consumption'
+      }
+    ]
 
+  }
+}
 
 
 //AppGui
@@ -36,11 +49,12 @@ resource guiApp 'Microsoft.App/containerApps@2023-05-01' = {
       }
     ]
    }
+   environmentId: containerEnvironment.id
    configuration:{
     ingress: {
       allowInsecure: false
       targetPort: 80
-      stickySessions: 'sticky'  
+      
     } 
    }
   } 
@@ -60,13 +74,13 @@ resource elsterApp 'Microsoft.App/containerApps@2023-05-01' = {
       }
     ]
    }
-   environmentId: 
+   environmentId:containerEnvironment.id
    configuration:{
     
     ingress: {
       allowInsecure: false
       targetPort: 80
-      stickySessions: null  
+      
     } 
    }
   } 
@@ -84,11 +98,11 @@ resource automationApp 'Microsoft.App/containerApps@2023-05-01' = {
       }
     ]
    }
+   environmentId: containerEnvironment.id
    configuration:{
     ingress: {
       allowInsecure: false
       targetPort: 80
-      stickySessions: null  
     } 
    }
   } 
