@@ -21,7 +21,7 @@ var tisAppAutomation = 'app-automation-${environmentName}-${solutionName}'
 
 //Env hier wird die subnet-Id benötigt
 
-resource containerEnvironment 
+
 
 //AppGui
 resource guiApp 'Microsoft.App/containerApps@2023-05-01' = {
@@ -31,7 +31,7 @@ resource guiApp 'Microsoft.App/containerApps@2023-05-01' = {
    template: {
     containers: [
       {
-        name: 'app-gui-container'
+        name: 'gui-container'
         image: 'mcr.microsoft.com/k8se/quickstart:latest'
       }
     ]
@@ -55,7 +55,7 @@ resource elsterApp 'Microsoft.App/containerApps@2023-05-01' = {
    template: {
     containers: [
       {
-        name: 'app-elster-container'
+        name: 'elster-container'
         image: 'mcr.microsoft.com/k8se/quickstart:latest'
       }
     ]
@@ -79,7 +79,7 @@ resource automationApp 'Microsoft.App/containerApps@2023-05-01' = {
    template: {
     containers: [
       {
-        name: 'app-elster-container'
+        name: 'automation-container'
         image: 'mcr.microsoft.com/k8se/quickstart:latest'
       }
     ]
