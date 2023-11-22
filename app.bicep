@@ -27,10 +27,10 @@ resource containerEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
     zoneRedundant: false
     workloadProfiles: [
       {
-        workloadProfileType: 'Dedicated'
+        workloadProfileType: 'D8'
         maximumCount:5
         minimumCount:3
-        name: 'D8'
+        name: 'test'
       }
     ]
   }
