@@ -54,7 +54,7 @@ resource guiApp 'Microsoft.App/containerApps@2023-05-01' = {
     ingress: {
       allowInsecure: false
       targetPort: 80
-      
+      external: true   
     } 
    }
   } 
