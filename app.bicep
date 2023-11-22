@@ -24,7 +24,7 @@ resource containerEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
   name: 'container-env-${environmentName}-${solutionName}'
   location: location
   properties: {
-    zoneRedundant: true
+    zoneRedundant: false
     workloadProfiles: [
       {
         workloadProfileType: 'Consumption'
