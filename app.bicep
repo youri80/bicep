@@ -48,7 +48,7 @@ resource guiApp 'Microsoft.App/containerApps@2023-05-01' = {
         name: 'gui-container'
         image: 'mcr.microsoft.com/k8se/quickstart:latest'
         resources: {
-           cpu: 1
+          
            memory: '1Gi'
         }
       }
