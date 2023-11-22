@@ -28,7 +28,8 @@ resource containerEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
     workloadProfiles: [
       {
         workloadProfileType: 'D4'
-  
+        maximumCount:10
+        minimumCount:3
         name: 'test'
       }
     ]
