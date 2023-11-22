@@ -27,8 +27,9 @@ resource containerEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
     zoneRedundant: false
     workloadProfiles: [
       {
-        workloadProfileType: 'Consumption'
-        name: 'Consumption'
+        workloadProfileType: 'D4'
+  
+        name: 'test'
       }
     ]
 

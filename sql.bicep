@@ -30,31 +30,10 @@ param sqlServerAdministratorLogin string
 @description('The administrator login password for the SQL server.')
 param sqlServerAdministratorPassword string
 
-@description('The name and tier of the SQL database SKU.')
-param sqlDatabaseSku object
 
-var appServicePlanName = 'paln-${environmentName}-${solutionName}'
-var appServiceAppName = 'app-${environmentName}-${solutionName}'
 var sqlServerName = 'sql-${environmentName}-${solutionName}'
 var sqlDatabaseNames = [ 'ER' , 'MEW']
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: appServicePlanName
-  location: location
-  sku: {
-    name: 'S2'
-    capacity: appServicePlanInstanceCount
-  }
-}
-
-resource appServiceApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: appServiceAppName
-  location: location
-  properties: {
-    serverFarmId: appServicePlan.id
-    httpsOnly: true
-  }
-}
 
 resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: sqlServerName
