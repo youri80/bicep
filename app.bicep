@@ -48,7 +48,7 @@ resource guiApp 'Microsoft.App/containerApps@2023-05-01' = {
         name: 'gui-container'
         image: 'mcr.microsoft.com/k8se/quickstart:latest'
         resources: {
-           cpu: 2
+           cpu: '2.0'
            memory: '1Gi'
         }
       }
@@ -77,7 +77,7 @@ resource elsterApp 'Microsoft.App/containerApps@2023-05-01' = {
         name: 'elster-container'
         image: 'mcr.microsoft.com/k8se/quickstart:latest'
         resources: {
-          cpu: 2
+          cpu: '2.0'
           memory: '1Gi'
        }
       }
@@ -106,7 +106,7 @@ resource automationApp 'Microsoft.App/containerApps@2023-05-01' = {
         name: 'automation-container'
         image: 'mcr.microsoft.com/k8se/quickstart:latest'
         resources: {
-          cpu: 2
+          cpu: '2.0'
           memory: '1Gi'
        }
       }
