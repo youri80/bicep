@@ -13,11 +13,24 @@ param environmentName string = 'dev'
 param solutionName string = 'tis-${uniqueString(resourceGroup().id)}'
 
 
+resource tisVnet 'Microsoft.Network/virtualNetworks@2023-05-01' existing = {
+  name : vnetname
+  scope: resourceGroup(networkResourceGroup)
+}
+
+param vnetname  string = 'vnet-ertragsrechnung-dev-01'
+param networkResourceGroup string = 'rg-ertragsrechnung-dev-networking'
+
 var tisAppGui = 'gui-${environmentName}-${solutionName}'
 
 var tisAppElster  = 'elster-${environmentName}-${solutionName}'
 
 var tisAppAutomation = 'automation-${environmentName}-${solutionName}'
+
+var subnet = filter(tisVnet.properties.subnets,s => s.name == 'subnet2')[0].id
+
+
+
 
 //Env hier wird die subnet-Id benötigt
 resource containerEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
@@ -33,6 +46,11 @@ resource containerEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
         name: 'test'
       }
     ]
+    vnetConfiguration: {
+      internal: true
+      infrastructureSubnetId: subnet
+
+    }
   }
 }
 

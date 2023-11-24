@@ -29,14 +29,12 @@ param location string = resourceGroup().location
 var privateEndpointName = 'pv-tis-${environmentName}-${solutionName}'
 
 
-var sqlServerName = 'sql-${environmentName}-${solutionName}'
-var sqlDatabaseNames = [ 'ER' , 'MEW']
-var sqlNicName = 'nic-sql-${environmentName}-${solutionName}'
 
 resource tisVnet 'Microsoft.Network/virtualNetworks@2023-05-01' existing = {
   name : vnetname
   scope: resourceGroup(networkResourceGroup)
 }
+
 
 
 
