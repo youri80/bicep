@@ -11,10 +11,10 @@ param environmentName string = 'dev'
 @maxLength(30)
 param solutionName string = 'tis-${uniqueString(resourceGroup().id)}'
 
-@description('The number of App Service plan instances.')
-@minValue(1)
-@maxValue(10)
-param appServicePlanInstanceCount int = 1
+param vnetname  string = 'vnet-ertragsrechnung-dev-01'
+param networkResourceGroup string = 'rg-ertragchsrechnung-dev-networking'
+
+var subnetID = resourceId(networkResourceGroup,'Microsof.Network/virtualNetwork',vnetname )
 
 /*@description('The name and tier of the App Service plan SKU.')
 param appServicePlanSku object
@@ -31,20 +31,62 @@ param sqlServerAdministratorLogin string
 param sqlServerAdministratorPassword string
 
 
+var privateEndpointName = 'pv-tis-${environmentName}-${solutionName}'
+
+
 var sqlServerName = 'sql-${environmentName}-${solutionName}'
 var sqlDatabaseNames = [ 'ER' , 'MEW']
+var sqlNicName = 'nic-sql-${environmentName}-${solutionName}'
+
+resource tisVnet 'Microsoft.Network/virtualNetworks@2023-05-01' existing = {
+  name : vnetname
+  scope: resourceGroup(networkResourceGroup)
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' existing = {
+  name: '/subnet1'
+  scope: resourceGroup(networkResourceGroup)
+}
 
 
 resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: sqlServerName
   location: location
+  
   properties: {
     administratorLogin: sqlServerAdministratorLogin
     administratorLoginPassword: sqlServerAdministratorPassword
     minimalTlsVersion: '1.2'
+    publicNetworkAccess: 'Disabled'
+  }
+
+}
+
+resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
+  name: privateEndpointName
+  location: location
+  properties:{
+    privateLinkServiceConnections: [
+      {
+        name: privateEndpointName
+        properties: {
+          privateLinkServiceId: sqlServer.id
+          groupIds: [
+            'sqlServer'
+          ]
+        }
+      }
+    ]
+    subnet: {
+      id: subnet.id
+    } 
     
   }
+  
 }
+
+
+
 
 resource sqlDatabase 'Microsoft.Sql/servers/databases@2023-05-01-preview' =[for dbName in sqlDatabaseNames: {
   parent: sqlServer
