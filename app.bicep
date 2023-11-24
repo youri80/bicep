@@ -46,12 +46,15 @@ resource containerEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
         name: 'test'
       }
     ]
+    
     vnetConfiguration: {
       internal: true
       infrastructureSubnetId: subnet
 
     }
+    
   }
+  
 }
 
 
@@ -74,7 +77,7 @@ resource guiApp 'Microsoft.App/containerApps@2023-05-01' = {
     ingress: {
       allowInsecure: false
       targetPort: 80
-      external: true   
+      external: false   
     } 
    }
   } 
@@ -102,6 +105,7 @@ resource elsterApp 'Microsoft.App/containerApps@2023-05-01' = {
     ingress: {
       allowInsecure: false
       targetPort: 80
+      external: false
       
     } 
    }
@@ -126,6 +130,9 @@ resource automationApp 'Microsoft.App/containerApps@2023-05-01' = {
     ingress: {
       allowInsecure: false
       targetPort: 80
+      external: false
+       
+       
     } 
    }
   } 
