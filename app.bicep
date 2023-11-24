@@ -30,7 +30,7 @@ var tisAppAutomation = 'automation-${environmentName}-${solutionName}'
 var subnet = filter(tisVnet.properties.subnets,s => s.name == 'subnet2')[0].id
 
 
-
+var workloadProfilename = 'test'
 
 //Env hier wird die subnet-Id benötigt
 resource containerEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
@@ -43,7 +43,7 @@ resource containerEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
         workloadProfileType: 'D8'
         maximumCount:5
         minimumCount:3
-        name: 'test'
+        name: workloadProfilename
       }
     ]
     
@@ -63,6 +63,7 @@ resource guiApp 'Microsoft.App/containerApps@2023-05-01' = {
   location:location
   name: tisAppGui
   properties: {
+    workloadProfileName: workloadProfilename
    template: {
     containers: [
       {
@@ -73,8 +74,10 @@ resource guiApp 'Microsoft.App/containerApps@2023-05-01' = {
     ]
    }
    environmentId: containerEnvironment.id
+   
    configuration:{
     ingress: {
+       
       allowInsecure: false
       targetPort: 80
       external: false   
@@ -87,8 +90,9 @@ resource guiApp 'Microsoft.App/containerApps@2023-05-01' = {
 resource elsterApp 'Microsoft.App/containerApps@2023-05-01' = {
   location:location
   name: tisAppElster
-  
+
   properties: {
+    workloadProfileName: workloadProfilename
    template: {
     containers: [
       {
@@ -116,6 +120,7 @@ resource automationApp 'Microsoft.App/containerApps@2023-05-01' = {
   location:location
   name: tisAppAutomation
   properties: {
+    workloadProfileName: workloadProfilename
    template: {
     containers: [
       {
