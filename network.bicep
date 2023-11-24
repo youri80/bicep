@@ -12,7 +12,7 @@ param environmentName string = 'dev'
 param solutionName string = 'tis-${uniqueString(resourceGroup().id)}'
 
 param vnetname  string = 'vnet-ertragsrechnung-dev-01'
-param networkResourceGroup string = 'rg-ertragchsrechnung-dev-networking'
+param networkResourceGroup string = 'rg-ertragsrechnung-dev-networking'
 
 param sqlServerid string = ''
 
