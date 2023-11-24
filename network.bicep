@@ -48,7 +48,7 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
       {
         name: privateEndpointName
         properties: {
-          privateLinkServiceId: sqlServer.id
+          privateLinkServiceId: sqlServerid
           groupIds: [
             'sqlServer'
           ]
