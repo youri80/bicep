@@ -17,6 +17,7 @@ param networkResourceGroup string = 'rg-ertragsrechnung-dev-networking'
 @description('Id of SqlServer to connect to Vnet')
 param sqlServerid string = ''
 
+param sqlSubnetName string = 'subnet1'
 
 
 /*@description('The name and tier of the App Service plan SKU.')
@@ -49,7 +50,7 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
       }
     ]
     subnet: {
-      id: filter(tisVnet.properties.subnets, s => s.name == 'subnet1')[0].id
+      id: filter(tisVnet.properties.subnets, s => s.name == sqlSubnetName)[0].id
     } 
     
   }

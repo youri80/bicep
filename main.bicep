@@ -53,6 +53,7 @@ module network 'sql_network.bicep' = {
       networkResourceGroup: networkResourceGroup
       vnetname:vnetname
       location: location
+      sqlSubnetName: subnetSqlServer
       solutionName: solutionName
   }
   dependsOn: [
