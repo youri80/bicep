@@ -14,6 +14,7 @@ param solutionName string = 'tis-${uniqueString(resourceGroup().id)}'
 param vnetname  string = 'vnet-ertragsrechnung-dev-01'
 param networkResourceGroup string = 'rg-ertragsrechnung-dev-networking'
 
+@description('Id of SqlServer to connect to Vnet')
 param sqlServerid string = ''
 
 
@@ -24,19 +25,13 @@ param appServicePlanSku object
 @description('The Azure region into which the resources should be deployed.')
 param location string = resourceGroup().location
 
-
-
-var privateEndpointName = 'pv-tis-${environmentName}-${solutionName}'
-
-
+//Name of private endpoint
+var privateEndpointName = 'pv-sql-${environmentName}-${solutionName}'
 
 resource tisVnet 'Microsoft.Network/virtualNetworks@2023-05-01' existing = {
   name : vnetname
   scope: resourceGroup(networkResourceGroup)
 }
-
-
-
 
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
   name: privateEndpointName
@@ -58,7 +53,7 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
     } 
     
   }
-  
 }
+
 
 
